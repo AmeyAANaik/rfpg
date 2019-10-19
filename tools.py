@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 import os
+import sys
 
 IMG_MEAN = np.array((103.939, 116.779, 123.68), dtype=np.float32)
 label_colours = [(128, 64, 128), (244, 35, 231), (69, 69, 69)
@@ -65,9 +66,9 @@ def load_img(img_path):
     ext = filename.split('.')[-1]
 
     if ext.lower() == 'png':
-        img = tf.image.decode_png(tf.read_file(img_path), channels=3)
+        img = tf.image.decode_png(tf.io.read_file(img_path), channels=3)
     elif ext.lower() == 'jpg':
-        img = tf.image.decode_jpeg(tf.read_file(img_path), channels=3)
+        img = tf.image.decode_jpeg(tf.ie.read_file(img_path), channels=3)
     else:
         print('cannot process {0} file.'.format(file_type))
 
@@ -81,6 +82,6 @@ def preprocess(img, h, w):
     img -= IMG_MEAN
 
     pad_img = tf.image.pad_to_bounding_box(img, 0, 0, h, w)
-    pad_img = tf.expand_dims(pad_img, dim=0)
+    pad_img = tf.expand_dims(pad_img, axis=0)
 
     return pad_img
