@@ -114,7 +114,7 @@ def adversarial(img_path,label):
     logits = model(x_hat)
     with tf.device(get_device_setter(0)):
     
-        with tf.variable_scope('adversarial') as scope:
+        with tf.compat.v1.variable_scope('adversarial') as scope:
             loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=tf.cast(logits,dtype=tf.float32),labels=tf.cast(y,dtype=tf.float32)))
             optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate)
             grads = optimizer.compute_gradients(loss,var_list=[x_hat])
