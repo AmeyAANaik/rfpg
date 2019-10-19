@@ -92,8 +92,8 @@ def model(img):
     
    
     # Predictions.
-    raw_output_up = tf.image.resize_bilinear(raw_output, size=[h, w], align_corners=True)
-    raw_output_up = tf.image.crop_to_bounding_box(raw_output_up, 0, 0, img_shape[0], img_shape[1])
+    raw_output_up = tf.compat.v1.image.resize_bilinear(raw_output, size=[h, w], align_corners=True)
+    raw_output_up = tf.compat.v1.image.crop_to_bounding_box(raw_output_up, 0, 0, img_shape[0], img_shape[1])
     shape = tf.shape(raw_output_up)
    
     return raw_output_up
