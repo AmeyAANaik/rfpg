@@ -124,11 +124,11 @@ def adversarial(img_path,label):
             above = img - epsilon
             projected = tf.clip_by_value(tf.clip_by_value(x_hat,below,above),0,255)
             with tf.control_dependencies([projected]):
-                projection = tf.assign(x_hat,projected)
+                projection = tf.compat.v1.assign(x_hat,projected)
 
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
+    sess = tf.compat.v1.Session(config=config)
 
     init = tf.global_variables_initializer()
     sess.run(init)

@@ -166,7 +166,7 @@ class Network(object):
         c_i = input.get_shape()[-1]
 
         convolve = lambda i, k: tf.nn.atrous_conv2d(i, k, dilation, padding=padding)
-        with tf.variable_scope(name) as scope:
+        with tf.compat.v1.variable_scope(name) as scope:
             kernel = self.make_var('weights', shape=[k_h, k_w, c_i, c_o])
             output = convolve(input, kernel)
 
@@ -184,7 +184,7 @@ class Network(object):
     @layer
     def max_pool(self, input, k_h, k_w, s_h, s_w, name, padding=DEFAULT_PADDING):
         self.validate_padding(padding)
-        return tf.nn.max_pool(input,
+        return tf.nn.max_pool2d(input,
                               ksize=[1, k_h, k_w, 1],
                               strides=[1, s_h, s_w, 1],
                               padding=padding,
@@ -194,7 +194,7 @@ class Network(object):
     @layer
     def avg_pool(self, input, k_h, k_w, s_h, s_w, name, padding=DEFAULT_PADDING):
         self.validate_padding(padding)
-        output = tf.nn.avg_pool(input,
+        output = tf.nn.avg_pool2d(input,
                               ksize=[1, k_h, k_w, 1],
                               strides=[1, s_h, s_w, 1],
                               padding=padding,
@@ -270,4 +270,4 @@ class Network(object):
 
     @layer
     def resize_bilinear(self, input, size, name):
-        return tf.image.resize_bilinear(input, size=size, align_corners=True, name=name)
+        return tf.compat.v1.image.resize_bilinear(input, size=size, align_corners=True, name=name)
